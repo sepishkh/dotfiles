@@ -1,0 +1,51 @@
+[general]
+live_config_reload = true
+
+[window]
+dynamic_title = true
+startup_mode = "Maximized"
+padding = {x = 2, y = 2}
+
+[font]
+normal =      {family = "FantasqueSansM Nerd Font", style = "Regular"}
+bold =        {family = "FantasqueSansM Nerd Font", style = "Bold"}
+italic =      {family = "FantasqueSansM Nerd Font", style = "Italic"}
+bold_italic = {family = "FantasqueSansM Nerd Font", style = "Bold Italic"}
+size = 12.5
+offset = {x = 0, y = 0}
+
+[colors.bright]
+black = "#565656"
+blue = "#49a4f8"
+cyan = "#99faf2"
+green = "#c0e17d"
+magenta = "#a47de9"
+red = "#ec5357"
+white = "#ffffff"
+yellow = "#f9da6a"
+
+[colors.normal]
+black = "#2e2e2e"
+blue = "#47a0f3"
+cyan = "#64dbed"
+green = "#abe047"
+magenta = "#7b5cb0"
+red = "#eb4129"
+white = "#e5e9f0"
+yellow = "#f6c744"
+
+[colors.primary]
+background = "#282C34"
+foreground = "#fffbf6"
+
+[selection]
+save_to_clipboard = true
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+
+[cursor]
+style = {shape = "Beam", blinking = "Off"}
+unfocused_hollow = true
+
+[scrolling]
+history = 10000
+multiplier = 10
