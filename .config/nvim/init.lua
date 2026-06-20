@@ -118,7 +118,7 @@ vim.keymap.set("n", "<leader>k", "<cmd>cprev<CR>")
 vim.keymap.set("n", "<leader>J", "<cmd>lnext<CR>")
 vim.keymap.set("n", "<leader>K", "<cmd>lprev<CR>")
 
-Plugins
+-- Plugins
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
@@ -133,7 +133,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
---   {
+  {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
