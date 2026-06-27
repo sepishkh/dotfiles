@@ -18,5 +18,6 @@
     ],
     "[html]": {
         "editor.defaultFormatter": "vscode.html-language-features"
-    }
+    },
+    "explorer.confirmDelete": false
 }

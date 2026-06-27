@@ -1,4 +1,4 @@
--- Settings
+-- Options
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -8,28 +8,33 @@ vim.g.netrw_browse_split = 0
 
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.scrolloff = 20
+vim.opt.sidescrolloff = 20
+vim.opt.cursorline = true
+vim.opt.wrap = false
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-
-vim.opt.wrap = false
 
 vim.opt.tabstop = 2
 vim.opt.softtabstop= 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
+vim.opt.smartindent = true
+vim.opt.autoindent = true
 
-vim.opt.scrolloff = 20
+vim.opt.clipboard = "unnamedplus"
+vim.opt.virtualedit = "block"
 
-vim.opt.showmode = false
 vim.opt.shortmess:append "I"
 vim.opt.mouse = ""
 
 vim.opt.breakindent = true
-vim.opt.smartindent = true
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
 
 vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
@@ -39,31 +44,33 @@ vim.opt.backup = false
 vim.opt.undodir = vim.fn.stdpath("state") .. "/undodir"
 vim.opt.undofile = true
 
-vim.opt.hlsearch = false
-vim.opt.incsearch = true
-
 vim.opt.path = ",,**,."
 vim.opt.wildignore:append { "*.obj", "*.out", "*.o", "*.a", "*/.git/*", "*/build/*", "*/cmake-build*/*" }
 vim.opt.suffixes:append { ".c", ".log" }
+vim.opt.completeopt = "menu,menuone,noinsert,noselect"
+
+vim.opt.termguicolors = true
+vim.cmd.colorscheme("habamax")
+vim.opt.showmode = false
+require('vim._core.ui2').enable({})
 
 if vim.fn.executable("rg") then
   vim.opt.grepprg = "rg --smart-case --hidden --vimgrep" 
   vim.opt.grepformat = "%f:%l:%c:%m"
 end
 
-vim.opt.cursorline = true
-vim.opt.termguicolors = true
-vim.cmd.colorscheme "habamax"
-
 vim.opt.exrc = true
+
+vim.opt.redrawtime = 10000
+vim.opt.maxmempattern = 20000
 
 -- Noevide
 if vim.g.neovide then
   vim.opt.guifont = "JetBrainsMono NF:h11.1:w-0.1"
   vim.g.neovide_scale_factor = 1.0
-  vim.g.neovide_scroll_animation_length = 0.2
+  -- vim.g.neovide_scroll_animation_length = 0.2
   vim.g.neovide_remember_window_size = true
-  vim.g.neovide_cursor_animation_length = 0.06
+  -- vim.g.neovide_cursor_animation_length = 0.06
   vim.g.neovide_profiler = false
   vim.g.neovide_cursor_animate_in_insert_mode = true
 end
@@ -91,8 +98,8 @@ vim.keymap.set("n", "<M-l>", "<C-w><", { desc = "Decrease current window width" 
 vim.keymap.set("n", "<M-j>", "<C-w>+", { desc = "Increase current window height" })
 vim.keymap.set("n", "<M-k>", "<C-w>-", { desc = "Decrease current window height" })
 
-vim.keymap.set("n", "<Tab>", ":bn<CR>", { desc = "Go to the next buffer" })
-vim.keymap.set("n", "<S-Tab>", ":bp<CR>", { desc = "Go to the previous buffer" })
+-- vim.keymap.set("n", "<Tab>", ":bn<CR>", { desc = "Go to the next buffer" })
+-- vim.keymap.set("n", "<S-Tab>", ":bp<CR>", { desc = "Go to the previous buffer" })
 
 -- vim.keymap.set("i", "'", "''<left>")
 -- vim.keymap.set("i", "\"", "\"\"<left>")
@@ -118,37 +125,42 @@ vim.keymap.set("n", "<leader>k", "<cmd>cprev<CR>")
 vim.keymap.set("n", "<leader>J", "<cmd>lnext<CR>")
 vim.keymap.set("n", "<leader>K", "<cmd>lprev<CR>")
 
--- Plugins
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
+vim.keymap.set("n", "<leader>vs", ":vsplit<CR>", { desc = "Split window vertically" })
+vim.keymap.set("n", "<leader>hs", ":split<CR>", { desc = "Split window horizontally" })
 
-require("lazy").setup({
-  {
-    "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-  },
-  {
-    'windwp/nvim-autopairs',
-    event = "InsertEnter",
-    config = true
-  },
-  {
-    "tpope/vim-commentary",
-  },
-  -- {
-  --   'numToStr/Comment.nvim',
-  --   lazy = false,
-  --   config = true,
-  -- },
+vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
+vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
+
+local augroup = vim.api.nvim_create_augroup("UserConfig", { clear = true })
+vim.api.nvim_create_autocmd("TextYankPost", {
+	group = augroup,
+	callback = function()
+		vim.hl.on_yank()
+	end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup,
+	pattern = { "markdown", "text", "gitcommit" },
+	callback = function()
+		vim.opt_local.wrap = true
+		vim.opt_local.linebreak = true
+		vim.opt_local.spell = true
+	end,
+})
+
+-- Plugins
+vim.pack.add({
+  "git@github.com:nvim-tree/nvim-web-devicons",
+  "git@github.com:tpope/vim-commentary",
+  {
+		src = "git@github.com:nvim-treesitter/nvim-treesitter",
+		version = "main",
+		build = ":TSUpdate",
+	},
+  { src = "git@github.com:nvim-lualine/lualine.nvim" },
+  { src = "git@github.com:windwp/nvim-autopairs" },
+  { src = "git@github.com:neovim/nvim-lspconfig" },
+  { src = "git@github.com:mason-org/mason.nvim" },
+  { src = "git@github.com:mason-org/mason-lspconfig.nvim" },
+})
