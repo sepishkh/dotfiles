@@ -153,17 +153,17 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Plugins
 vim.pack.add({
-  "git@github.com:nvim-tree/nvim-web-devicons",
-  "git@github.com:tpope/vim-commentary",
+  "https://github.com/nvim-tree/nvim-web-devicons",
+  "https://github.com/tpope/vim-commentary",
   {
-		src = "git@github.com:nvim-treesitter/nvim-treesitter",
+		src = "https://github.com/nvim-treesitter/nvim-treesitter",
 		version = "main",
 		build = ":TSUpdate",
-	},
-  { src = "git@github.com:nvim-lualine/lualine.nvim" },
-  { src = "git@github.com:windwp/nvim-autopairs" },
-  { src = "git@github.com:neovim/nvim-lspconfig" },
-  { src = "git@github.com:mason-org/mason.nvim" },
-  { src = "git@github.com:mason-org/mason-lspconfig.nvim" },
-  { src = "git@github.com:lewis6991/gitsigns.nvim" },
+  },
+  { src = "https://github.com/nvim-lualine/lualine.nvim" },
+  { src = "https://github.com/windwp/nvim-autopairs" },
+  { src = "https://github.com/neovim/nvim-lspconfig" },
+  { src = "https://github.com/mason-org/mason.nvim" },
+  { src = "https://github.com/mason-org/mason-lspconfig.nvim" },
+  { src = "https://github.com/lewis6991/gitsigns.nvim" },
 })
